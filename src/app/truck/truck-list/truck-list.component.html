@@ -1,0 +1,115 @@
+<div class="truck-list-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1><i class="fa fa-truck"></i> {{ '::Truck:MyTrucks' | abpLocalization }}</h1>
+      <p>{{ '::Truck:ManageFleet' | abpLocalization }}</p>
+    </div>
+    <a routerLink="/truck/add" class="btn-add-truck">
+      <i class="fa fa-plus"></i> {{ '::Truck:AddNewTruck' | abpLocalization }}
+    </a>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      <i class="fa fa-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+  }
+
+  <div class="search-bar">
+    <i class="fa fa-search"></i>
+    <input
+      type="text"
+      [placeholder]="'::Truck:SearchPlaceholder' | abpLocalization"
+      (input)="onSearch($event)"
+    />
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p>{{ '::Truck:LoadingTrucks' | abpLocalization }}</p>
+    </div>
+  } @else if (filteredTrucks.length === 0) {
+    <div class="empty-state">
+      <i class="fa fa-truck"></i>
+      @if (searchTerm) {
+        <h3>{{ '::Truck:NoTrucksFound' | abpLocalization }}</h3>
+        <p>{{ '::Truck:NoTrucksMatch' | abpLocalization }}</p>
+      } @else {
+        <h3>{{ '::Truck:NoTrucksYet' | abpLocalization }}</h3>
+        <p>{{ '::Truck:AddFirstTruck' | abpLocalization }}</p>
+        <a routerLink="/truck/add" class="btn-primary">
+          <i class="fa fa-plus"></i> {{ '::Truck:AddYourFirstTruck' | abpLocalization }}
+        </a>
+      }
+    </div>
+  } @else {
+    <div class="truck-count">
+      {{ '::Truck:Showing' | abpLocalization }} {{ filteredTrucks.length }} {{ '::Truck:Trucks' | abpLocalization }}
+    </div>
+
+    <div class="trucks-grid">
+      @for (truck of filteredTrucks; track truck.id) {
+        <div class="truck-card">
+          <div class="truck-header">
+            <div class="truck-icon">
+              <i class="fa fa-truck"></i>
+            </div>
+            <div class="truck-title">
+              <h3>{{ truck.make }} {{ truck.model }}</h3>
+              <span class="truck-year">{{ truck.year }}</span>
+            </div>
+          </div>
+
+          <div class="truck-details">
+            <div class="detail-item">
+              <i class="fa fa-id-card"></i>
+              <div>
+                <span class="label">{{ '::Truck:License' | abpLocalization }}</span>
+                <span class="value">{{ truck.licenseNumber || ('::Common:NA' | abpLocalization) }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fa fa-file-text"></i>
+              <div>
+                <span class="label">{{ '::Truck:Registration' | abpLocalization }}</span>
+                <span class="value">{{ truck.registrationNumber || ('::Common:NA' | abpLocalization) }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fa fa-tags"></i>
+              <div>
+                <span class="label">{{ '::Truck:Type' | abpLocalization }}</span>
+                <span class="value">{{ getTruckTypeName(truck.truckTypeId) }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fa fa-balance-scale"></i>
+              <div>
+                <span class="label">{{ '::Truck:MaxLoad' | abpLocalization }}</span>
+                <span class="value">{{ truck.maxLoad ? truck.maxLoad + ' kg' : ('::Common:NA' | abpLocalization) }}</span>
+              </div>
+            </div>
+          </div>
+
+          @if (truck.temperatureRequirement !== undefined && truck.temperatureRequirement !== 0) {
+            <div class="temperature-badge">
+              <i class="fa fa-thermometer-half"></i>
+              {{ getTemperatureName(truck.temperatureRequirement) }}
+            </div>
+          }
+
+          <div class="truck-actions">
+            <a [routerLink]="['/truck', truck.id]" class="btn-view">
+              <i class="fa fa-eye"></i> {{ '::Truck:View' | abpLocalization }}
+            </a>
+            <a [routerLink]="['/truck/edit', truck.id]" class="btn-edit">
+              <i class="fa fa-pencil"></i> {{ '::Truck:Edit' | abpLocalization }}
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

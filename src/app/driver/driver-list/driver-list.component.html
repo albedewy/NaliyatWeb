@@ -1,0 +1,91 @@
+<div class="driver-list-container">
+  <div class="page-header">
+    <div class="header-content">
+      <h1><i class="fa fa-users"></i> {{ '::Driver:MyDrivers' | abpLocalization }}</h1>
+      <p>{{ '::Driver:ManageFleetDrivers' | abpLocalization }}</p>
+    </div>
+    <a routerLink="/driver/add" class="btn-add-driver">
+      <i class="fa fa-plus"></i> {{ '::Driver:AddNewDriver' | abpLocalization }}
+    </a>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      <i class="fa fa-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+  }
+
+  <div class="search-bar">
+    <i class="fa fa-search"></i>
+    <input
+      type="text"
+      [placeholder]="'::Driver:SearchPlaceholder' | abpLocalization"
+      (input)="onSearch($event)"
+    />
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p>{{ '::Driver:LoadingDrivers' | abpLocalization }}</p>
+    </div>
+  } @else if (filteredDrivers.length === 0) {
+    <div class="empty-state">
+      <i class="fa fa-user-plus"></i>
+      @if (searchTerm) {
+        <h3>{{ '::Driver:NoDriversFound' | abpLocalization }}</h3>
+        <p>{{ '::Driver:NoDriversMatch' | abpLocalization }}</p>
+      } @else {
+        <h3>{{ '::Driver:NoDriversYet' | abpLocalization }}</h3>
+        <p>{{ '::Driver:AddFirstDriver' | abpLocalization }}</p>
+        <a routerLink="/driver/add" class="btn-primary">
+          <i class="fa fa-plus"></i> {{ '::Driver:AddYourFirstDriver' | abpLocalization }}
+        </a>
+      }
+    </div>
+  } @else {
+    <div class="driver-count">
+      {{ '::Driver:Showing' | abpLocalization }} {{ filteredDrivers.length }} {{ '::Driver:Drivers' | abpLocalization }}
+    </div>
+
+    <div class="drivers-grid">
+      @for (driver of filteredDrivers; track driver.id) {
+        <div class="driver-card">
+          <div class="driver-header">
+            <div class="driver-avatar">
+              <i class="fa fa-user"></i>
+            </div>
+            <div class="driver-title">
+              <h3>{{ driver.name || ('::Driver:UnnamedDriver' | abpLocalization) }}</h3>
+              <span class="driver-phone">{{ driver.phone || ('::Common:NA' | abpLocalization) }}</span>
+            </div>
+          </div>
+
+          <div class="driver-details">
+            <div class="detail-item">
+              <i class="fa fa-id-card"></i>
+              <div>
+                <span class="label">{{ '::Driver:IDNumber' | abpLocalization }}</span>
+                <span class="value">{{ driver.identification || ('::Common:NA' | abpLocalization) }}</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <i class="fa fa-car"></i>
+              <div>
+                <span class="label">{{ '::Truck:License' | abpLocalization }}</span>
+                <span class="value">{{ driver.licenseNumber || ('::Common:NA' | abpLocalization) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="driver-actions">
+            <a [routerLink]="['/driver', driver.id]" class="btn-view">
+              <i class="fa fa-eye"></i> {{ '::TripList:ViewDetails' | abpLocalization }}
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,193 @@
+<div class="add-truck-container">
+  <div class="back-link">
+    <a routerLink="/truck/list">
+      <i class="fa fa-arrow-left"></i> {{ '::Truck:BackToMyTrucks' | abpLocalization }}
+    </a>
+  </div>
+
+  <div class="form-card">
+    <div class="card-header">
+      <div class="header-icon">
+        <i class="fa fa-truck"></i>
+      </div>
+      <div>
+        <h1>{{ '::Truck:AddNewTruck' | abpLocalization }}</h1>
+        <p>{{ '::Truck:AddTruckSubtitle' | abpLocalization }}</p>
+      </div>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">
+        <i class="fa fa-exclamation-circle"></i>
+        {{ errorMessage }}
+      </div>
+    }
+
+    <form [formGroup]="truckForm" (ngSubmit)="onSubmit()">
+      <div class="form-section">
+        <h3><i class="fa fa-info-circle"></i> {{ '::Truck:BasicInformation' | abpLocalization }}</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="make">{{ '::Truck:Make' | abpLocalization }} <span class="required">*</span></label>
+            <input
+              type="text"
+              id="make"
+              formControlName="make"
+              [placeholder]="'::Truck:MakePlaceholder' | abpLocalization"
+              [class.is-invalid]="isFieldInvalid('make')"
+            />
+            @if (isFieldInvalid('make')) {
+              <span class="error-message">{{ '::Truck:MakeRequired' | abpLocalization }}</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="model">{{ '::Truck:Model' | abpLocalization }} <span class="required">*</span></label>
+            <input
+              type="text"
+              id="model"
+              formControlName="model"
+              [placeholder]="'::Truck:ModelPlaceholder' | abpLocalization"
+              [class.is-invalid]="isFieldInvalid('model')"
+            />
+            @if (isFieldInvalid('model')) {
+              <span class="error-message">{{ '::Truck:ModelRequired' | abpLocalization }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="year">{{ '::Truck:Year' | abpLocalization }} <span class="required">*</span></label>
+            <select
+              id="year"
+              formControlName="year"
+              [class.is-invalid]="isFieldInvalid('year')"
+            >
+              <option value="">{{ '::Truck:SelectYear' | abpLocalization }}</option>
+              @for (year of yearOptions; track year) {
+                <option [value]="year">{{ year }}</option>
+              }
+            </select>
+            @if (isFieldInvalid('year')) {
+              <span class="error-message">{{ '::Truck:YearRequired' | abpLocalization }}</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="truckTypeId">{{ '::Trip:TruckType' | abpLocalization }} <span class="required">*</span></label>
+            <select
+              id="truckTypeId"
+              formControlName="truckTypeId"
+              [class.is-invalid]="isFieldInvalid('truckTypeId')"
+            >
+              @for (option of truckTypeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.key }}</option>
+              }
+            </select>
+            @if (isFieldInvalid('truckTypeId')) {
+              <span class="error-message">{{ '::Truck:TruckTypeRequired' | abpLocalization }}</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3><i class="fa fa-id-card"></i> {{ '::Truck:RegistrationDetails' | abpLocalization }}</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="licenseNumber">{{ '::Truck:LicenseNumber' | abpLocalization }} <span class="required">*</span></label>
+            <input
+              type="text"
+              id="licenseNumber"
+              formControlName="licenseNumber"
+              [placeholder]="'::Truck:LicenseNumberPlaceholder' | abpLocalization"
+              [class.is-invalid]="isFieldInvalid('licenseNumber')"
+            />
+            @if (isFieldInvalid('licenseNumber')) {
+              <span class="error-message">{{ '::Truck:LicenseNumberRequired' | abpLocalization }}</span>
+            }
+          </div>
+          <div class="form-group">
+            <label for="registrationNumber">{{ '::Truck:RegistrationNumber' | abpLocalization }}</label>
+            <input
+              type="text"
+              id="registrationNumber"
+              formControlName="registrationNumber"
+              [placeholder]="'::Truck:RegistrationNumberPlaceholder' | abpLocalization"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3><i class="fa fa-cog"></i> {{ '::Truck:Specifications' | abpLocalization }}</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="maxLoad">{{ '::Truck:MaxLoadKg' | abpLocalization }}</label>
+            <input
+              type="number"
+              id="maxLoad"
+              formControlName="maxLoad"
+              [placeholder]="'::Truck:MaxLoadPlaceholder' | abpLocalization"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label for="temperatureRequirement">{{ '::Truck:TemperatureRequirement' | abpLocalization }}</label>
+            <select
+              id="temperatureRequirement"
+              formControlName="temperatureRequirement"
+            >
+              @for (option of temperatureOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.key }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3><i class="fa fa-user"></i> {{ '::Truck:AssignDriver' | abpLocalization }}</h3>
+        
+        <div class="form-group">
+          <label for="driverId">{{ '::Driver:Driver' | abpLocalization }}</label>
+          <select
+            id="driverId"
+            formControlName="driverId"
+          >
+            <option [ngValue]="null">{{ '::Truck:NoDriverAssigned' | abpLocalization }}</option>
+            @if (isLoadingDrivers) {
+              <option disabled>{{ '::Truck:LoadingDrivers' | abpLocalization }}</option>
+            } @else {
+              @for (driver of drivers; track driver.id) {
+                <option [ngValue]="driver.id">{{ driver.name }} ({{ driver.phone || ('::Common:NA' | abpLocalization) }})</option>
+              }
+            }
+          </select>
+          <span class="helper-text">
+            <i class="fa fa-info-circle"></i> 
+            {{ '::Truck:AssignDriverHelper' | abpLocalization }}
+            @if (drivers.length === 0 && !isLoadingDrivers) {
+              <a routerLink="/driver/add">{{ '::Truck:AddDriverFirst' | abpLocalization }}</a>
+            }
+          </span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" routerLink="/truck/list">
+          {{ '::Trip:Cancel' | abpLocalization }}
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+          @if (isSubmitting) {
+            <i class="fa fa-spinner fa-spin"></i> {{ '::Truck:Adding' | abpLocalization }}
+          } @else {
+            <i class="fa fa-plus"></i> {{ '::Truck:AddTruck' | abpLocalization }}
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

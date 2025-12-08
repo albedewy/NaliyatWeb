@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/e9783efe-75ef-43e7-8511-2eee8be86ca6/resourceGroups/naqliyat_group/providers/Microsoft.Web/sites/naqliyat",
+    "appService.deploySubpath": "."
+}

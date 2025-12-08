@@ -1,0 +1,333 @@
+<div class="trip-detail-container">
+  <div class="back-link">
+    <a routerLink="/trip/list">
+      <i class="fa fa-arrow-left"></i> Back to Trips
+    </a>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      <i class="fa fa-exclamation-circle"></i>
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (successMessage) {
+    <div class="alert alert-success">
+      <i class="fa fa-check-circle"></i>
+      {{ successMessage }}
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p>Loading trip details...</p>
+    </div>
+  } @else if (trip) {
+    <div class="trip-detail-content">
+      <!-- Trip Header -->
+      <div class="trip-header-card">
+        <div class="trip-status">
+          <span class="status-badge" [ngClass]="getStatusClass(trip.statusId)">
+            {{ getStatusName(trip.statusId) }}
+          </span>
+        </div>
+        <h1>Trip Details</h1>
+        <p class="trip-id">ID: {{ trip.id }}</p>
+      </div>
+
+      <div class="detail-grid">
+        <!-- Location Card -->
+        <div class="detail-card">
+          <h3><i class="fa fa-map-marker"></i> Route</h3>
+          <div class="route-display">
+            <div class="location from">
+              <span class="label">From</span>
+              <span class="value">{{ trip.fromLocation }}</span>
+            </div>
+            <div class="route-line">
+              <i class="fa fa-long-arrow-right"></i>
+            </div>
+            <div class="location to">
+              <span class="label">To</span>
+              <span class="value">{{ trip.toLocation }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Card -->
+        <div class="detail-card">
+          <h3><i class="fa fa-calendar"></i> Schedule</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Start Date</span>
+              <span class="value">{{ trip.startDate | date:'medium' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">End Date</span>
+              <span class="value">{{ trip.endDate | date:'medium' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cargo Card -->
+        <div class="detail-card">
+          <h3><i class="fa fa-cube"></i> Cargo Details</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Goods Type</span>
+              <span class="value">{{ trip.goodsType }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Weight</span>
+              <span class="value">{{ trip.goodsWeight }} kg</span>
+            </div>
+            @if (trip.goodsDimensions) {
+              <div class="info-item">
+                <span class="label">Dimensions</span>
+                <span class="value">{{ trip.goodsDimensions }}</span>
+              </div>
+            }
+            <div class="info-item">
+              <span class="label">Truck Type</span>
+              <span class="value">{{ getTruckTypeName(trip.truckTypeId) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes Card -->
+        @if (trip.notes) {
+          <div class="detail-card full-width">
+            <h3><i class="fa fa-sticky-note"></i> Notes</h3>
+            <p class="notes-text">{{ trip.notes }}</p>
+          </div>
+        }
+
+        <!-- OTP Card (Requester only) -->
+        @if (isRequester && trip.otp) {
+          <div class="detail-card otp-card">
+            <h3><i class="fa fa-key"></i> Delivery OTP</h3>
+            <div class="otp-display">
+              <span class="otp-code">{{ trip.otp }}</span>
+              <p class="otp-hint">Share this code with the driver upon delivery</p>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Live Tracking Map (when trip is On Its Way) -->
+      @if (trip.statusId === TripStatuses.OnItsWay) {
+        <div class="map-section">
+          <div class="map-header">
+            <h2><i class="fa fa-map"></i> Live Tracking</h2>
+            <div class="tracking-status">
+              <span class="pulse"></span>
+              <span>Trip in Progress</span>
+            </div>
+          </div>
+          <div class="map-container" #mapContainer></div>
+          <div class="map-legend">
+            <div class="legend-item">
+              <span class="legend-marker origin"></span>
+              <span>Origin: {{ trip.fromLocation }}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-marker destination"></span>
+              <span>Destination: {{ trip.toLocation }}</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-marker truck"></span>
+              <span>Current Position (Simulated)</span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Driver Bid Section -->
+      @if (isDriver && trip?.statusId === TripStatuses.OpenForBidding) {
+        <div class="driver-bid-section">
+          @if (isLoadingTruck) {
+            <div class="loading-truck">
+              <i class="fa fa-spinner fa-spin"></i> Loading your truck information...
+            </div>
+          } @else if (!driverTruck) {
+            <div class="no-truck-warning">
+              <i class="fa fa-exclamation-triangle"></i>
+              <div>
+                <h4>No Truck Assigned</h4>
+                <p>You don't have a truck assigned to your account. Please contact the fleet owner to assign a truck to you before placing bids.</p>
+              </div>
+            </div>
+          } @else {
+            <div class="bid-section-header">
+              <div class="bid-header-content">
+                <i class="fa fa-gavel"></i>
+                <div>
+                  <h3>Place Your Bid</h3>
+                  <p>Submit your offer for this trip</p>
+                </div>
+              </div>
+              @if (!showBidForm) {
+                <button class="btn-place-bid" (click)="toggleBidForm()">
+                  <i class="fa fa-plus"></i> Place Bid
+                </button>
+              }
+            </div>
+
+            <!-- Show assigned truck info -->
+            <div class="assigned-truck-info">
+              <i class="fa fa-truck"></i>
+              <span>Bidding with: <strong>{{ driverTruck.make }} {{ driverTruck.model }}</strong> ({{ driverTruck.licenseNumber }})</span>
+            </div>
+
+          @if (showBidForm) {
+            <form [formGroup]="bidForm" (ngSubmit)="submitBid()" class="bid-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="price">
+                    <i class="fa fa-money"></i> Your Price (SAR) <span class="required">*</span>
+                  </label>
+                  <div class="price-input-wrapper">
+                    <span class="currency">SAR</span>
+                    <input
+                      type="number"
+                      id="price"
+                      formControlName="price"
+                      placeholder="Enter your bid amount"
+                      min="1"
+                      [class.is-invalid]="isFieldInvalid('price')"
+                    />
+                  </div>
+                  @if (isFieldInvalid('price')) {
+                    <span class="error-message">Please enter a valid price</span>
+                  }
+                </div>
+                <div class="form-group">
+                  <label for="arrivalDate">
+                    <i class="fa fa-clock-o"></i> Estimated Arrival <span class="required">*</span>
+                  </label>
+                  <input
+                    type="datetime-local"
+                    id="arrivalDate"
+                    formControlName="arrivalDate"
+                    [class.is-invalid]="isFieldInvalid('arrivalDate')"
+                  />
+                  @if (isFieldInvalid('arrivalDate')) {
+                    <span class="error-message">Please select an arrival date</span>
+                  }
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn-cancel" (click)="toggleBidForm()">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-submit-bid" [disabled]="isSubmittingBid">
+                  @if (isSubmittingBid) {
+                    <i class="fa fa-spinner fa-spin"></i> Submitting...
+                  } @else {
+                    <i class="fa fa-gavel"></i> Submit Bid
+                  }
+                </button>
+              </div>
+            </form>
+          }
+          }
+        </div>
+      }
+
+      <!-- Confirm Arrival Section (Driver only, when trip is On Its Way) -->
+      @if (canConfirmArrival) {
+        <div class="confirm-arrival-section">
+          <div class="arrival-section-header">
+            <div class="arrival-header-content">
+              <i class="fa fa-flag-checkered"></i>
+              <div>
+                <h3>Confirm Arrival</h3>
+                <p>Enter the OTP provided by the customer to confirm delivery</p>
+              </div>
+            </div>
+            @if (!showOtpForm) {
+              <button class="btn-confirm-arrival" (click)="toggleOtpForm()">
+                <i class="fa fa-check-circle"></i> Confirm Arrival
+              </button>
+            }
+          </div>
+
+          @if (showOtpForm) {
+            <form [formGroup]="otpForm" (ngSubmit)="confirmArrival()" class="otp-form">
+              <div class="form-group">
+                <label for="otp">
+                  <i class="fa fa-key"></i> OTP Code <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="otp"
+                  formControlName="otp"
+                  placeholder="Enter the 4-digit OTP"
+                  maxlength="6"
+                  [class.is-invalid]="isOtpFieldInvalid('otp')"
+                />
+                @if (isOtpFieldInvalid('otp')) {
+                  <span class="error-message">Please enter a valid OTP code</span>
+                }
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn-cancel" (click)="toggleOtpForm()">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-submit-arrival" [disabled]="isConfirmingArrival">
+                  @if (isConfirmingArrival) {
+                    <i class="fa fa-spinner fa-spin"></i> Confirming...
+                  } @else {
+                    <i class="fa fa-check"></i> Confirm Delivery
+                  }
+                </button>
+              </div>
+            </form>
+          }
+        </div>
+      }
+
+      <!-- Bids Section -->
+      @if (trip.statusId === TripStatuses.OpenForBidding || trip.statusId === TripStatuses.WaitingBidAgreement) {
+        <div class="bids-section">
+          <h2><i class="fa fa-gavel"></i> Bids ({{ bids.length }})</h2>
+          @if (bids.length === 0) {
+            <div class="empty-bids">
+              <i class="fa fa-clock-o"></i>
+              <p>No bids yet. Waiting for drivers to submit their offers.</p>
+            </div>
+          } @else {
+            <div class="bids-list">
+              @for (bid of bids; track bid.id) {
+                <div class="bid-card">
+                  <div class="bid-info">
+                    <div class="bid-price">
+                      <span class="currency">SAR</span>
+                      <span class="amount">{{ bid.price }}</span>
+                    </div>
+                    @if (bid.arrivalDate) {
+                      <div class="bid-arrival">
+                        <i class="fa fa-calendar-check-o"></i>
+                        Arrival: {{ bid.arrivalDate | date:'mediumDate' }}
+                      </div>
+                    }
+                  </div>
+                  <div class="bid-actions">
+                    <button class="btn-approve" (click)="approveBid(bid.id!)">
+                      <i class="fa fa-check"></i> Approve
+                    </button>
+                    <button class="btn-reject" (click)="rejectBid(bid.id!)">
+                      <i class="fa fa-times"></i> Reject
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

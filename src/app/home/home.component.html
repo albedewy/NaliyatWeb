@@ -1,0 +1,375 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>{{ '::Hero:LicensedTrucks' | abpLocalization }}</span>
+      <span class="separator">•</span>
+      <span>{{ '::Hero:VerifiedDrivers' | abpLocalization }}</span>
+      <span class="separator">•</span>
+      <span>{{ '::Hero:RealTimeTracking' | abpLocalization }}</span>
+    </div>
+    <h1 class="hero-title">{{ '::Hero:Title' | abpLocalization }}</h1>
+    <p class="hero-description">
+      {{ '::Hero:Description' | abpLocalization }}
+    </p>
+    <div class="hero-buttons">
+      @if(!hasLoggedIn){
+      <button (click)="login()" class="btn-primary-custom">{{ '::Hero:GetStarted' | abpLocalization }}</button>
+      }
+      <button class="btn-secondary-custom">{{ '::Hero:DownloadApp' | abpLocalization }}</button>
+    </div>
+    <div class="hero-features">
+      <span>{{ '::Hero:LicensedTrucks' | abpLocalization }}</span>
+      <span class="separator">•</span>
+      <span>{{ '::Hero:VerifiedDrivers' | abpLocalization }}</span>
+      <span class="separator">•</span>
+      <span>{{ '::Hero:RealTimeVisibility' | abpLocalization }}</span>
+    </div>
+  </div>
+  <div class="chat-widget">
+    <i class="fa fa-comments"></i>
+    <span>{{ '::Hero:TalkWithUs' | abpLocalization }}</span>
+  </div>
+</section>
+
+<!-- Trust Badges Section -->
+<section class="trust-section">
+  <h2 class="section-title">{{ '::Trust:Title' | abpLocalization }}</h2>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon">
+        <i class="fa fa-map-marker"></i>
+      </div>
+      <h3>{{ '::Trust:RealTimeTracking' | abpLocalization }}</h3>
+      <p>{{ '::Trust:RealTimeTrackingDesc' | abpLocalization }}</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <i class="fa fa-gavel"></i>
+      </div>
+      <h3>{{ '::Trust:SmartBidding' | abpLocalization }}</h3>
+      <p>{{ '::Trust:SmartBiddingDesc' | abpLocalization }}</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <i class="fa fa-lock"></i>
+      </div>
+      <h3>{{ '::Trust:SecureEscrow' | abpLocalization }}</h3>
+      <p>{{ '::Trust:SecureEscrowDesc' | abpLocalization }}</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <i class="fa fa-check-circle"></i>
+      </div>
+      <h3>{{ '::Trust:VerifiedTrucksDrivers' | abpLocalization }}</h3>
+      <p>{{ '::Trust:VerifiedTrucksDriversDesc' | abpLocalization }}</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <i class="fa fa-truck"></i>
+      </div>
+      <h3>{{ '::Trust:AllTruckTypes' | abpLocalization }}</h3>
+      <p>{{ '::Trust:AllTruckTypesDesc' | abpLocalization }}</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">
+        <i class="fa fa-users"></i>
+      </div>
+      <h3>{{ '::Trust:ForCompaniesIndividuals' | abpLocalization }}</h3>
+      <p>{{ '::Trust:ForCompaniesIndividualsDesc' | abpLocalization }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <h2 class="section-title">{{ '::Features:Title' | abpLocalization }}</h2>
+  <p class="section-subtitle">{{ '::Features:Subtitle' | abpLocalization }}</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fa fa-plus-circle"></i>
+      </div>
+      <h3>{{ '::Features:TripCreation' | abpLocalization }}</h3>
+      <p>{{ '::Features:TripCreationDesc' | abpLocalization }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fa fa-bolt"></i>
+      </div>
+      <h3>{{ '::Features:ReceiveBids' | abpLocalization }}</h3>
+      <p>{{ '::Features:ReceiveBidsDesc' | abpLocalization }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fa fa-map"></i>
+      </div>
+      <h3>{{ '::Features:LiveMapTracking' | abpLocalization }}</h3>
+      <p>{{ '::Features:LiveMapTrackingDesc' | abpLocalization }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fa fa-key"></i>
+      </div>
+      <h3>{{ '::Features:OTPConfirmation' | abpLocalization }}</h3>
+      <p>{{ '::Features:OTPConfirmationDesc' | abpLocalization }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fa fa-star"></i>
+      </div>
+      <h3>{{ '::Features:RateDriver' | abpLocalization }}</h3>
+      <p>{{ '::Features:RateDriverDesc' | abpLocalization }}</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <i class="fa fa-cogs"></i>
+      </div>
+      <h3>{{ '::Features:TruckOwnerModule' | abpLocalization }}</h3>
+      <p>{{ '::Features:TruckOwnerModuleDesc' | abpLocalization }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section">
+  <h2 class="section-title">{{ '::HowItWorks:Title' | abpLocalization }}</h2>
+  <p class="section-subtitle">{{ '::HowItWorks:Subtitle' | abpLocalization }}</p>
+  <div class="steps-container">
+    <div class="step-card">
+      <div class="step-number">1</div>
+      <h3>{{ '::HowItWorks:Step1Title' | abpLocalization }}</h3>
+      <p>{{ '::HowItWorks:Step1Desc' | abpLocalization }}</p>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h3>{{ '::HowItWorks:Step2Title' | abpLocalization }}</h3>
+      <p>{{ '::HowItWorks:Step2Desc' | abpLocalization }}</p>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-card">
+      <div class="step-number">3</div>
+      <h3>{{ '::HowItWorks:Step3Title' | abpLocalization }}</h3>
+      <p>{{ '::HowItWorks:Step3Desc' | abpLocalization }}</p>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step-card">
+      <div class="step-number">4</div>
+      <h3>{{ '::HowItWorks:Step4Title' | abpLocalization }}</h3>
+      <p>{{ '::HowItWorks:Step4Desc' | abpLocalization }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- For Drivers Section -->
+<section class="drivers-section">
+  <div class="drivers-content">
+    <div class="drivers-text">
+      <h2>{{ '::Drivers:Title' | abpLocalization }}</h2>
+      <p>{{ '::Drivers:Description' | abpLocalization }}</p>
+      <button class="btn-primary-custom">{{ '::Drivers:JoinAsDriver' | abpLocalization }}</button>
+    </div>
+    <div class="drivers-visual">
+      <i class="fa fa-id-card driver-icon"></i>
+    </div>
+  </div>
+</section>
+
+<!-- Fleet Management Section -->
+<section class="fleet-section">
+  <div class="fleet-content">
+    <div class="fleet-visual">
+      <i class="fa fa-truck fleet-icon"></i>
+    </div>
+    <div class="fleet-text">
+      <h2>{{ '::Fleet:Title' | abpLocalization }}</h2>
+      <p>{{ '::Fleet:Description' | abpLocalization }}</p>
+      <div class="fleet-features">
+        <div class="fleet-feature">
+          <i class="fa fa-check"></i>
+          <span>{{ '::Fleet:RegisterMultipleTrucks' | abpLocalization }}</span>
+        </div>
+        <div class="fleet-feature">
+          <i class="fa fa-check"></i>
+          <span>{{ '::Fleet:UploadDocuments' | abpLocalization }}</span>
+        </div>
+        <div class="fleet-feature">
+          <i class="fa fa-check"></i>
+          <span>{{ '::Fleet:TrackPerformance' | abpLocalization }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Enterprise Section -->
+<section class="enterprise-section">
+  <h2 class="section-title">{{ '::Enterprise:Title' | abpLocalization }}</h2>
+  <p class="section-subtitle">{{ '::Enterprise:Subtitle' | abpLocalization }}</p>
+  <div class="enterprise-features">
+    <div class="enterprise-card">
+      <i class="fa fa-dashboard"></i>
+      <h4>{{ '::Enterprise:Dashboard' | abpLocalization }}</h4>
+      <p>{{ '::Enterprise:DashboardDesc' | abpLocalization }}</p>
+    </div>
+    <div class="enterprise-card">
+      <i class="fa fa-users"></i>
+      <h4>{{ '::Enterprise:UserManagement' | abpLocalization }}</h4>
+      <p>{{ '::Enterprise:UserManagementDesc' | abpLocalization }}</p>
+    </div>
+    <div class="enterprise-card">
+      <i class="fa fa-line-chart"></i>
+      <h4>{{ '::Enterprise:Analytics' | abpLocalization }}</h4>
+      <p>{{ '::Enterprise:AnalyticsDesc' | abpLocalization }}</p>
+    </div>
+    <div class="enterprise-card">
+      <i class="fa fa-shield"></i>
+      <h4>{{ '::Enterprise:Compliance' | abpLocalization }}</h4>
+      <p>{{ '::Enterprise:ComplianceDesc' | abpLocalization }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing-section">
+  <h2 class="section-title">{{ '::Pricing:Title' | abpLocalization }}</h2>
+  <p class="section-subtitle">{{ '::Pricing:Subtitle' | abpLocalization }}</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>{{ '::Pricing:FreePlan' | abpLocalization }}</h3>
+      <p class="pricing-description">{{ '::Pricing:FreePlanDesc' | abpLocalization }}</p>
+      <ul class="pricing-features">
+        <li><i class="fa fa-check"></i> {{ '::Pricing:UpTo5Trips' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:BasicTracking' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:StandardSupport' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:AccessVerifiedDrivers' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:SecureEscrowPayments' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:MobileAppAccess' | abpLocalization }}</li>
+      </ul>
+      <button class="btn-outline">{{ '::Hero:GetStarted' | abpLocalization }}</button>
+    </div>
+    <div class="pricing-card featured">
+      <div class="featured-badge">{{ '::Pricing:Popular' | abpLocalization }}</div>
+      <h3>{{ '::Pricing:BusinessPlan' | abpLocalization }}</h3>
+      <p class="pricing-description">{{ '::Pricing:BusinessPlanDesc' | abpLocalization }}</p>
+      <ul class="pricing-features">
+        <li><i class="fa fa-check"></i> {{ '::Pricing:UnlimitedTrips' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:AdvancedTracking' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:PrioritySupport' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:ReducedCommission' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:DedicatedAccountManager' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:DigitalInvoices' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:APIAccess' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:CustomBranding' | abpLocalization }}</li>
+      </ul>
+      <button class="btn-primary-custom">{{ '::Hero:GetStarted' | abpLocalization }}</button>
+    </div>
+    <div class="pricing-card">
+      <h3>{{ '::Pricing:EnterprisePlan' | abpLocalization }}</h3>
+      <p class="pricing-description">{{ '::Pricing:EnterprisePlanDesc' | abpLocalization }}</p>
+      <ul class="pricing-features">
+        <li><i class="fa fa-check"></i> {{ '::Pricing:EverythingInBusiness' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:CustomSLA' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:DedicatedSupportTeam' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:AdvancedAnalytics' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:WhiteLabel' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:IntegrationSupport' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:TrainingOnboarding' | abpLocalization }}</li>
+        <li><i class="fa fa-check"></i> {{ '::Pricing:VolumeDiscounts' | abpLocalization }}</li>
+      </ul>
+      <button class="btn-outline">{{ '::Pricing:ContactSales' | abpLocalization }}</button>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <h2 class="section-title">{{ '::Testimonials:Title' | abpLocalization }}</h2>
+  <p class="section-subtitle">{{ '::Testimonials:Subtitle' | abpLocalization }}</p>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">"{{ '::Testimonials:Quote1' | abpLocalization }}"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="author-info">
+          <h4>{{ '::Testimonials:Author1Name' | abpLocalization }}</h4>
+          <p>{{ '::Testimonials:Author1Title' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"{{ '::Testimonials:Quote2' | abpLocalization }}"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="author-info">
+          <h4>{{ '::Testimonials:Author2Name' | abpLocalization }}</h4>
+          <p>{{ '::Testimonials:Author2Title' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"{{ '::Testimonials:Quote3' | abpLocalization }}"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <i class="fa fa-user"></i>
+        </div>
+        <div class="author-info">
+          <h4>{{ '::Testimonials:Author3Name' | abpLocalization }}</h4>
+          <p>{{ '::Testimonials:Author3Title' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="footer-section">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3>{{ '::AppName' | abpLocalization }}</h3>
+      <p>{{ '::Footer:Description' | abpLocalization }}</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-column">
+        <h4>{{ '::Footer:Company' | abpLocalization }}</h4>
+        <ul>
+          <li><a href="#">{{ '::Footer:AboutUs' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:Careers' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:Blog' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:PressKit' | abpLocalization }}</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>{{ '::Footer:Platform' | abpLocalization }}</h4>
+        <ul>
+          <li><a href="#">{{ '::Footer:ServiceRequesterApp' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:DriverApp' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:AdminPortal' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:TruckOwnerPortal' | abpLocalization }}</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>{{ '::Footer:Support' | abpLocalization }}</h4>
+        <ul>
+          <li><a href="#">{{ '::Footer:FAQs' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:ContactUs' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:HelpCenter' | abpLocalization }}</a></li>
+          <li><a href="#">{{ '::Footer:TermsOfService' | abpLocalization }}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 {{ '::AppName' | abpLocalization }}. {{ '::Footer:AllRightsReserved' | abpLocalization }}</p>
+    <div class="footer-legal">
+      <a href="#">{{ '::Footer:PrivacyPolicy' | abpLocalization }}</a>
+      <a href="#">{{ '::Footer:TermsOfService' | abpLocalization }}</a>
+    </div>
+  </div>
+</footer>
