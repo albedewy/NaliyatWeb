@@ -22,7 +22,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/Naqliyat/browser"
+              "base": "dist/Naqliyat"
             },
             "index": "src/index.html",
             "polyfills": [
